@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myweb-dep
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+       env: production
+  template:
+    metadata: 
+     name: myweb-pod
+     labels:
+       env: production
+    spec:
+      containers:
+      - name: myweb-con
+        image: yash6899/httpd-centos:1
+        ports:
+        - containerPort: 80
